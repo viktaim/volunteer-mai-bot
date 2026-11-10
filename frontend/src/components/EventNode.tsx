@@ -1,4 +1,3 @@
-
 import IconButton from "./IconButton";
 import infoIcon from "../assets/info.svg";
 
@@ -31,21 +30,25 @@ export default function EventNode({
 
     return (
         <div className="flex w-full items-center justify-between gap-3 border-y border-sec p-3 text-white">
-            <div className="flex items-center gap-3">
-                <div className="flex min-w-[76px] flex-col items-center justify-center text-center text-sm">
+
+            <div className="flex min-w-0 items-center gap-3">
+
+                <div className="flex min-w-[76px] shrink-0 flex-col items-center justify-center text-center text-sm">
                     <span>{formatted.date}</span>
-                    <span className="">{formatted.time}</span>
+                    <span>{formatted.time}</span>
                 </div>
 
-                <h3>{title}</h3>
+                <h3 className="min-w-0">{title}</h3>
+
             </div>
 
-            <div className="shrink-0">
+            <div className="flex size-6 shrink-0 items-center justify-center">
                 <IconButton
                     icon={infoIcon}
                     onClick={() => alert(description)}
                 />
             </div>
+
         </div>
     );
 }
