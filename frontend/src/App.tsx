@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
 import { BottomMenu } from "./components/BottomMenu";
+import RatingPage from "./pages/RatingPage";
 
 declare global {
     interface Window {
@@ -43,7 +44,7 @@ export default function App() {
                         <Routes>
                             <Route path="/" element={<HomePage user={user} />} />
                             <Route path="/game" />
-                            <Route path="/rating" />
+                            <Route path="/rating" element={<RatingPage />} />
                         </Routes>
                     </div>
 
