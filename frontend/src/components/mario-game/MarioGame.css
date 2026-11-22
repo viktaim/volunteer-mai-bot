@@ -1,0 +1,337 @@
+.mario-game {
+    --game-gutter: max(.75rem, env(safe-area-inset-left), env(safe-area-inset-right));
+    --game-viewport: calc(100vw - 2 * var(--game-gutter));
+    --game-width: min(36rem, var(--game-viewport));
+    display: grid;
+    gap: .875rem;
+    inline-size: var(--game-width);
+    min-inline-size: 0;
+    margin-inline-start: calc((100% - var(--game-width)) / 2);
+    color: white;
+}
+
+.mario-game[data-playing="true"] {
+    --game-width: min(52rem, var(--game-viewport));
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+.mario-game__stage[data-playing="true"],
+.mario-game__controls,
+.mario-game__control {
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mario-game__header {
+    display: flex;
+    min-inline-size: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+}
+
+.mario-game__header h1 {
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+.mario-game__tools, .mario-game__direction {
+    display: flex;
+    flex: none;
+    gap: .5rem;
+}
+
+.mario-game__tool, .mario-game__control {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    border: 1px solid rgb(255 255 255 / .25);
+    border-radius: 999px;
+    color: white;
+    background: rgb(255 255 255 / .1);
+    cursor: pointer;
+}
+
+.mario-game__tool {
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+}
+
+.mario-game__tool:disabled {
+    opacity: .48;
+    cursor: default;
+}
+
+.mario-game__icon {
+    display: block;
+    flex: none;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    image-rendering: pixelated;
+}
+
+.mario-game__card {
+    display: grid;
+    gap: .75rem;
+    min-inline-size: 0;
+    padding: .75rem;
+    border: 1px solid rgb(255 255 255 / .15);
+    border-radius: 1.5rem;
+    background: var(--color-sec, #4a4a4a);
+}
+
+.mario-game__hud {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: .375rem 0;
+    margin: 0;
+}
+
+.mario-game__hud > div {
+    display: grid;
+    justify-items: center;
+    align-content: space-between;
+    gap: .25rem;
+    min-inline-size: 0;
+    text-align: center;
+}
+
+.mario-game__hud > div + div {
+    border-inline-start: 1px solid rgb(255 255 255 / .16);
+}
+
+.mario-game__hud dt {
+    color: rgb(255 255 255 / .78);
+    font-size: .75rem;
+    line-height: 1.2;
+}
+.mario-game__hud dd {
+    display: flex;
+    min-block-size: 1.25rem;
+    align-items: center;
+    margin: 0;
+    font-weight: 500;
+    font-size: .9375rem;
+    line-height: 1.15;
+    font-variant-numeric: tabular-nums;
+}
+.mario-game__hud dd span {
+    color: rgb(255 255 255 / .72);
+    font-size: .75rem;
+    margin-inline-start: .125rem;
+}
+.mario-game__hearts {
+    gap: 1px;
+}
+.mario-game__hearts .mario-game__icon {
+    inline-size: .9375rem;
+    block-size: .9375rem;
+}
+
+.mario-game__stage {
+    position: relative;
+    block-size: clamp(9rem, 34vw, 13rem);
+    overflow: hidden;
+    isolation: isolate;
+    border: 1px solid rgb(255 255 255 / .19);
+    border-radius: 1rem;
+    background: var(--color-prim, #3b3b3b);
+}
+.mario-game__stage[data-playing="true"] {
+    block-size: clamp(14rem, min(51vh, calc(100vh - 19rem)), 26rem);
+    block-size: clamp(14rem, min(51svh, calc(100svh - 19rem)), 26rem);
+}
+.mario-game__stage:focus {
+    outline: none;
+}
+.mario-game__world {
+    position: absolute;
+    inset: 0;
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    image-rendering: pixelated;
+}
+.mario-game__stage [role="status"] {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    margin: 0;
+    padding: .75rem;
+    text-align: center;
+    background: var(--color-prim, #3b3b3b);
+}
+
+.mario-game__brief {
+    display: grid;
+    min-inline-size: 0;
+    padding: .125rem .25rem .25rem;
+}
+.mario-game__topic {
+    margin-block-end: .25rem;
+    color: rgb(255 255 255 / .76);
+    font-size: .8125rem;
+    line-height: 1.4;
+}
+.mario-game__brief h2 {
+    margin: 0;
+    font-weight: 500;
+    font-size: 1.1875rem;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+.mario-game__brief p {
+    margin: .5rem 0 .875rem;
+    color: rgb(255 255 255 / .88);
+    font-size: .9375rem;
+    line-height: 1.46;
+}
+.mario-game__task {
+    display: flex;
+    align-items: center;
+    gap: .625rem;
+    min-inline-size: 0;
+    margin-block-end: .875rem;
+    padding: .625rem .6875rem;
+    border: 1px solid rgb(255 255 255 / .12);
+    border-radius: .875rem;
+    background: var(--color-prim, #3b3b3b);
+    color: rgb(255 255 255 / .92);
+    font-size: .875rem;
+    line-height: 1.35;
+}
+.mario-game__primary, .mario-game__secondary {
+    display: grid;
+    min-block-size: 2.75rem;
+    place-items: center;
+    padding: .5rem .75rem;
+    border-radius: 999px;
+    text-align: center;
+    font-size: .9375rem;
+    line-height: 1.3;
+    font-weight: 500;
+    cursor: pointer;
+}
+.mario-game__primary {
+    border: 1px solid rgb(255 255 255 / .15);
+    color: #212121;
+    background: var(--color-gold, #d4af37);
+}
+.mario-game__primary:disabled {
+    opacity: .55;
+    cursor: default;
+}
+.mario-game__secondary {
+    margin-block-start: .375rem;
+    border: 1px solid transparent;
+    color: rgb(255 255 255 / .92);
+}
+
+.mario-game__input {
+    display: grid;
+    gap: .625rem;
+    padding: 0 .125rem .125rem;
+}
+.mario-game__controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .375rem;
+}
+.mario-game__control {
+    min-inline-size: 3.25rem;
+    min-block-size: 3rem;
+    padding: .25rem .75rem;
+    font-weight: 500;
+}
+.mario-game__control--jump {
+    color: #ffe7a4;
+    border-color: rgb(212 175 55 / .65);
+    background: rgb(212 175 55 / .13);
+    font-size: .875rem;
+}
+.mario-game__control .mario-game__icon {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+}
+.mario-game__control:active {
+    background: rgb(255 255 255 / .25);
+}
+.mario-game__control--jump:active {
+    background: rgb(212 175 55 / .28);
+}
+.mario-game__keys {
+    margin: 0;
+    text-align: center;
+    color: rgb(255 255 255 / .72);
+    font-size: .75rem;
+    line-height: 1.3;
+}
+.mario-game :is(button, a):focus-visible {
+    outline: 2px solid var(--color-gold, #d4af37);
+    outline-offset: 2px;
+}
+@media (hover: hover) {
+    .mario-game__tool:not(:disabled):hover, .mario-game__control:hover {
+        background: rgb(255 255 255 / .2);
+    }
+    .mario-game__primary:not(:disabled):hover {
+        filter: brightness(1.1);
+    }
+    .mario-game__secondary:hover {
+        background: rgb(255 255 255 / .1);
+    }
+}
+@media (pointer: coarse) {
+    .mario-game__keys { display: none; }
+}
+@media (max-width: 340px) {
+    .mario-game__card { padding: .625rem; }
+    .mario-game__hearts .mario-game__icon { inline-size: .75rem; block-size: .75rem; }
+    .mario-game__direction { gap: .375rem; }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+    .mario-game[data-playing="true"] { gap: .5rem; }
+    .mario-game__card[data-playing="true"] {
+        grid-template-columns: 7.25rem minmax(0, 1fr) 7.25rem;
+        align-items: center;
+        gap: .625rem;
+    }
+    .mario-game__card[data-playing="true"] .mario-game__hud { grid-column: 1 / -1; }
+    .mario-game__stage[data-playing="true"] {
+        grid-column: 2;
+        grid-row: 2;
+        block-size: clamp(9rem, calc(100vh - 13.5rem), 16rem);
+        block-size: clamp(9rem, calc(100svh - 13.5rem), 16rem);
+    }
+    .mario-game__input {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        z-index: 1;
+        padding: 0;
+        pointer-events: none;
+    }
+    .mario-game__control { pointer-events: auto; }
+    .mario-game__keys { display: none; }
+}
+@media (max-height: 500px) and (max-width: 650px) and (orientation: landscape) {
+    .mario-game__card[data-playing="true"] {
+        grid-template-columns: 3rem minmax(0, 1fr) 3rem;
+    }
+    .mario-game__direction {
+        flex-direction: column;
+        gap: .25rem;
+    }
+    .mario-game__control {
+        min-inline-size: 3rem;
+        padding-inline: .5rem;
+    }
+    .mario-game__control--jump span { display: none; }
+}
