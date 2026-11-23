@@ -1,3 +1,4 @@
+import os
 import asyncio
 import logging
 from datetime import datetime
@@ -32,9 +33,11 @@ from services import (
 )
 
 
-BOT_TOKEN = "токен"
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+PROXY_URL = os.getenv("PROXY_URL") or None
 
-PROXY_URL = "прокси"
+if not BOT_TOKEN:
+    raise SystemExit("BOT_TOKEN не задан. Проверь .env")
 
 
 # Адрес, по которому фронт видит этот бэкенд (попадёт в photo_url).
@@ -47,7 +50,7 @@ ADMIN_IDS = {123456789}
 
 logging.basicConfig(level=logging.INFO)
 
-session = AiohttpSession(proxy=PROXY_URL)
+session = AiohttpSession(proxy=PROXY_URL) if PROXY_URL else AiohttpSession()
 
 bot = Bot(
     token=BOT_TOKEN,
