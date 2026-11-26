@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
 
@@ -5,6 +6,14 @@ import HomePage from "./pages/HomePage";
 import { BottomMenu } from "./components/BottomMenu";
 import RatingPage from "./pages/RatingPage";
 import GamePage from "./pages/GamePage";
+
+interface TelegramUser {
+    id: number;
+    first_name: string;
+    last_name?: string;
+    username?: string;
+    photo_url?: string;
+}
 
 declare global {
     interface Window {
@@ -15,18 +24,12 @@ declare global {
                 close: () => void;
                 initData: string;
                 initDataUnsafe: {
-                    user?: {
-                        first_name?: string;
-                        username?: string;
-                        photo_url?: string;
-                    };
+                    user?: TelegramUser;
                 };
             };
         };
     }
 }
-
-
 
 export default function App() {
     const tg = window.Telegram?.WebApp;
@@ -35,7 +38,7 @@ export default function App() {
     useEffect(() => {
         tg?.ready();
         tg?.expand();
-    }, [tg]);
+    }, []);
 
     return (
         <HashRouter>
@@ -44,18 +47,12 @@ export default function App() {
                     <div className="flex-1">
                         <Routes>
                             <Route path="/" element={<HomePage user={user} />} />
-                            <Route path="/game" element={<GamePage />}/>
+                            <Route path="/game" element={<GamePage />} />
                             <Route path="/rating" element={<RatingPage />} />
                         </Routes>
                     </div>
 
-                    <div
-                        className="
-                            sticky bottom-0 z-50
-                            pt-6
-                            pb-[max(1.5rem,env(safe-area-inset-bottom))]
-                        "
-                    >
+                    <div className="sticky bottom-0 z-50 pt-6 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
                         <BottomMenu />
                     </div>
                 </div>

@@ -42,8 +42,8 @@ if not BOT_TOKEN:
 
 # Адрес, по которому фронт видит этот бэкенд (попадёт в photo_url).
 # Локально: http://localhost:8080. На сервере: https://api.your-domain.com
-API_BASE_URL = "http://localhost:8080"
-API_PORT = 8080
+API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8080")
+API_PORT = int(os.getenv("API_PORT", "8080"))
 
 # Telegram ID админов (узнать свой можно у @userinfobot)
 ADMIN_IDS = {123456789}
